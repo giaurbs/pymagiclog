@@ -59,7 +59,8 @@ for line in fwlogoutput.splitlines():
 				pckcolored=bcolors.YELLOW+pcks+bcolors.ENDC
 		else:
 				pckcolored=bcolors.GREEN+pcks+bcolors.ENDC
-			
+		
+		#print output
 		print "Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored
 
-		#print output
+
