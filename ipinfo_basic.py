@@ -2,12 +2,14 @@
 import subprocess
 import re
 
+
+PATH_TO_LOG = '/var/log/syslog'
+
 #tresholds for packets
 class trsh:
-		HIGH = 50
-		MEDIUM = 10
-		LOW = 5
-
+	HIGH = 50
+	MEDIUM = 10
+	LOW = 5
 
 #colors
 class bcolors:
@@ -19,7 +21,7 @@ class bcolors:
 
 
 #casting fwlogwatch
-fwlogoutput = subprocess.check_output(["fwlogwatch"])  
+fwlogoutput = subprocess.check_output(["fwlogwatch",PATH_TO_LOG])  
  
 #parsing each line
 for line in fwlogoutput.splitlines():
@@ -53,14 +55,13 @@ for line in fwlogoutput.splitlines():
 
 		#coloring packets based on tresholds
 		ipcks = int(pcks)
-		if ipcks >=trsh.HIGH:
+		if ipcks >= trsh.HIGH:
 				pckcolored=bcolors.RED+pcks+bcolors.ENDC
-		elif ipcks>=trsh.MEDIUM:
+		elif ipcks >= trsh.MEDIUM:
 				pckcolored=bcolors.YELLOW+pcks+bcolors.ENDC
 		else:
 				pckcolored=bcolors.GREEN+pcks+bcolors.ENDC
 		
 		#print output
 		print "Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored
-
 
