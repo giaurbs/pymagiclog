@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 import subprocess
 import re
+import pydoc
 
-
-PATH_TO_LOG = '/var/log/syslog'
+PATH_TO_LOG = "/var/log/syslog*"
 
 #tresholds for packets
 class trsh:
-	HIGH = 50
-	MEDIUM = 10
-	LOW = 5
+    HIGH = 50
+    MEDIUM = 10
+    LOW = 5
 
 #colors
 class bcolors:
@@ -21,7 +21,9 @@ class bcolors:
 
 
 #casting fwlogwatch
-fwlogoutput = subprocess.check_output(["fwlogwatch",PATH_TO_LOG])  
+cmd = ["fwlogwatch "+PATH_TO_LOG]
+fwlogoutput = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+
  
 #parsing each line
 for line in fwlogoutput.splitlines():
@@ -63,5 +65,5 @@ for line in fwlogoutput.splitlines():
 				pckcolored=bcolors.GREEN+pcks+bcolors.ENDC
 		
 		#print output
-		print "Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored
-
+		output = "Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored
+		print output
