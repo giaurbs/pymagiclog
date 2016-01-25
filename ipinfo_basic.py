@@ -24,7 +24,8 @@ class bcolors:
 cmd = ["fwlogwatch "+PATH_TO_LOG]
 fwlogoutput = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
 
- 
+output = ""
+
 #parsing each line
 for line in fwlogoutput.splitlines():
 
@@ -65,5 +66,6 @@ for line in fwlogoutput.splitlines():
 				pckcolored=bcolors.GREEN+pcks+bcolors.ENDC
 		
 		#print output
-		output = "Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored
-		print output
+		output+=("Offending IP: "+ip.ljust(16)+"\t"+"Country: "+geoloc.replace('\n', '').ljust(30)+"\tPcks: "+pckcolored+"\n")
+
+pydoc.pipepager(output, cmd='less -R')
