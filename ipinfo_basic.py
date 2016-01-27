@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# simple script to present in an enhanced way the blocked packets from ufw and resolve their countries
+# python 2
+
 import subprocess
 import re
 import pydoc
